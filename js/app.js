@@ -121,14 +121,32 @@ showCardOnClick = function(clickEvent) {
                         var self = $(this);
                         for (var i = 0; i < flipCards.length; i++) {
                             if (flipCards[i].find('i').attr('class') === self.find('i').attr('class')) {
+                                self.removeClass('animated wobble');
+                                self.addClass('show match animated rubberBand');
+                                flipCards[i].removeClass('animated wobble');
+                                flipCards[i].addClass('show match animated rubberBand');
+                                console.log('match');
+                                $(this).off('click');
 
-                                /*
-                                 * set up the event listener for a card. If a card is clicked:
-                                 *  - display the card's symbol (put this functionality in another function that you call from this one)
-                                 *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
-                                 *  - if the list already has another card, check to see if the two cards match
-                                 *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-                                 *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
-                                 *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
-                                 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-                                 */
+                                flipCards = [];
+                                break;
+                            } else {
+                                self.addClass('show open animated wobble');
+                                removeProperties(self);
+                                flipCards[0].on('click', showCardOnClick(flipCards[0]));
+                                console.log('no match');
+                            }
+                        }
+                    }
+
+
+                    /*
+                     * set up the event listener for a card. If a card is clicked:
+                     *  - display the card's symbol (put this functionality in another function that you call from this one)
+                     *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+                     *  - if the list already has another card, check to see if the two cards match
+                     *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+                     *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+                     *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+                     *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+                     */
