@@ -95,81 +95,90 @@ removeProperties = function(prop) {
 };
 
 showCardOnClick = function(clickEvent) {
-        clickEvent.on('click', function() {
-                    moves++;
-                    if (moves === 16) {
+    clickEvent.on('click', function() {
+        moves++;
+        if (moves === 16) {
 
-                    } else if (moves > 16 && moves <= 25) {
-                        $('section ul li').hide();
-                        $('section ul').append('<li><i class="fa fa-star"></i></li>');
-                        $('section ul').append('<li><i class="fa fa-star"></i></li>');
-                        stars = 2;
-                    } else if (moves > 25) {
-                        $('section ul li').hide();
-                        $('section ul').append('<li><i class="fa fa-star"></i></li>');
-                        stars = 1;
-                    }
+        } else if (moves > 16 && moves <= 25) {
+            $('section ul li').hide();
+            $('section ul').append('<li><i class="fa fa-star"></i></li>');
+            $('section ul').append('<li><i class="fa fa-star"></i></li>');
+            stars = 2;
+        } else if (moves > 25) {
+            $('section ul li').hide();
+            $('section ul').append('<li><i class="fa fa-star"></i></li>');
+            stars = 1;
+        }
 
-                    $('.moves').html(moves);
-                    if ((flipCards.length % 2) === 0) {
-                        $(this).addClass('show open animated wobble');
-                        $(this).off('click');
-                        flipCards.push($(this));
-                    } else if (flipCards.length !== 0) {
-                        $(this).addClass('show open animated wobble');
+        $('.moves').html(moves);
+        if ((flipCards.length % 2) === 0) {
+            $(this).addClass('show open animated wobble');
+            $(this).off('click');
+            flipCards.push($(this));
+        } else if (flipCards.length !== 0) {
+            $(this).addClass('show open animated wobble');
 
-                        var self = $(this);
-                        for (var i = 0; i < flipCards.length; i++) {
-                            if (flipCards[i].find('i').attr('class') === self.find('i').attr('class')) {
-                                self.removeClass('animated wobble');
-                                self.addClass('show match animated rubberBand');
-                                flipCards[i].removeClass('animated wobble');
-                                flipCards[i].addClass('show match animated rubberBand');
-                                console.log('match');
-                                $(this).off('click');
+            var self = $(this);
+            for (var i = 0; i < flipCards.length; i++) {
+                if (flipCards[i].find('i').attr('class') === self.find('i').attr('class')) {
+                    self.removeClass('animated wobble');
+                    self.addClass('show match animated rubberBand');
+                    flipCards[i].removeClass('animated wobble');
+                    flipCards[i].addClass('show match animated rubberBand');
+                    console.log('match');
+                    $(this).off('click');
 
-                                flipCards = [];
-                                break;
-                            } else {
-                                self.addClass('show open animated wobble');
-                                removeProperties(self);
-                                flipCards[0].on('click', showCardOnClick(flipCards[0]));
-                                console.log('no match');
-                            }
-                        }
-                    }
+                    flipCards = [];
+                    break;
+                } else {
+                    self.addClass('show open animated wobble');
+                    removeProperties(self);
+                    flipCards[0].on('click', showCardOnClick(flipCards[0]));
+                    console.log('no match');
+                }
+            }
+        }
 
-                    if ($('.deck').find('.match').length === 16) {
-                        setTimeout(function() {
-                            $('.deck').each(function() {
+        if ($('.deck').find('.match').length === 16) {
+            setTimeout(function() {
+                $('.deck').each(function() {
 
-                                swal({
-                                    title: 'Good Job',
-                                    type: 'success',
-                                    text: 'You WIN!  Moves taken ' + moves + '. Stars received ' + stars + '. Elapsed time: ' + hours + ' Hours ' + minutes + ' Minutes and ' + seconds + ' Seconds',
-                                    allowOutsideClick: false,
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Try Again',
-                                    confirmButtonColor: '#008000',
-                                    cancelButtonText: 'Exit',
-                                    cancelButtonColor: '#FF0000'
-                                }).then(function() {
-                                    location.reload();
-                                }, function(dismiss) {
-                                    console.log('Yes');
+                    swal({
+                        title: 'Good Job',
+                        type: 'success',
+                        text: 'You WIN!  Moves taken ' + moves + '. Stars received ' + stars + '. Elapsed time: ' + hours + ' Hours ' + minutes + ' Minutes and ' + seconds + ' Seconds',
+                        allowOutsideClick: false,
+                        showCancelButton: true,
+                        confirmButtonText: 'Try Again',
+                        confirmButtonColor: '#008000',
+                        cancelButtonText: 'Exit',
+                        cancelButtonColor: '#FF0000'
+                    }).then(function() {
+                        location.reload();
+                    }, function(dismiss) {
+                        console.log('Yes');
 
-                                });
+                    });
 
-                            });
-                        }, 300);
+                });
+            }, 300);
 
-                        /*
-                         * set up the event listener for a card. If a card is clicked:
-                         *  - display the card's symbol (put this functionality in another function that you call from this one)
-                         *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
-                         *  - if the list already has another card, check to see if the two cards match
-                         *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-                         *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
-                         *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
-                         *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-                         */
+            stopGame = 1;
+            $('.timer').hide();
+            $('.timer').html('0:0:0');
+            $('.timer').show();
+        }
+
+
+    });
+};
+/*
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ */
