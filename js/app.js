@@ -9,7 +9,6 @@ var hours = 0;
 var minutes = 0;
 var seconds = 0;
 var stopGame = 0;
-
 window.onload = function() {
     setInterval(function() {
         if (stopGame !== 1) {
@@ -32,12 +31,12 @@ window.onload = function() {
     }, 800);
 };
 
+
 $('.deck').each(function() {
     $(this).find('li').each(function() {
         cards.push($(this));
     });
 });
-
 var temp = 0;
 
 cardType = shuffle(cardType);
@@ -59,7 +58,6 @@ $('.deck').each(function() {
         temp++;
     });
 });
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -82,6 +80,7 @@ function shuffle(array) {
 
     return array;
 }
+
 
 var moves = 0,
     stars = 3;
@@ -109,7 +108,6 @@ showCardOnClick = function(clickEvent) {
             $('section ul').append('<li><i class="fa fa-star"></i></li>');
             stars = 1;
         }
-
         $('.moves').html(moves);
         if ((flipCards.length % 2) === 0) {
             $(this).addClass('show open animated wobble');
@@ -121,6 +119,7 @@ showCardOnClick = function(clickEvent) {
             var self = $(this);
             for (var i = 0; i < flipCards.length; i++) {
                 if (flipCards[i].find('i').attr('class') === self.find('i').attr('class')) {
+
                     self.removeClass('animated wobble');
                     self.addClass('show match animated rubberBand');
                     flipCards[i].removeClass('animated wobble');
@@ -138,7 +137,6 @@ showCardOnClick = function(clickEvent) {
                 }
             }
         }
-
         if ($('.deck').find('.match').length === 16) {
             setTimeout(function() {
                 $('.deck').each(function() {
@@ -162,7 +160,6 @@ showCardOnClick = function(clickEvent) {
 
                 });
             }, 300);
-
             stopGame = 1;
             $('.timer').hide();
             $('.timer').html('0:0:0');
