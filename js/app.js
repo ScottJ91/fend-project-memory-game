@@ -172,6 +172,16 @@ showCardOnClick = function(clickEvent) {
 
     });
 };
+
+for (var i = 0; i < cards.length; i++) {
+    cards[i].on('click', showCardOnClick(cards[i]));
+}
+
+$('.restart').on('click', function() {
+    location.reload();
+});
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
